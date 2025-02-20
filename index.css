@@ -1,0 +1,37 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+ul {
+  all: unset;
+  display: flex;
+  border: 1px black solid;
+}
+ul li {
+  all: unset;
+  margin: 30px;
+  font-size: 22px;
+}
+ul a {
+  all: unset;
+  cursor: pointer;
+}
+#root {
+  /* border: 1px black solid; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 80vh;
+}
+#root span {
+  font-size: 18px;
+  margin: 20px;
+  text-align: center;
+}
+.special-keyword {
+  cursor: pointer;
+  color: blue;
+}
