@@ -1,28 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link href="./index.css" rel="stylesheet" />
-  </head>
-  <body>
-    <nav>
-      <ul>
-        <li><a href="/" onclick="router.navigate('/')">Home</a></li>
-        <li>
-          <a href="/about" onclick="router.navigate('/about')">About</a>
-        </li>
-        <li>
-          <a href="/setting" onclick="router.navigate('/setting')">Setting</a>
-        </li>
-      </ul>
-    </nav>
-    <div id="root"></div>
-    <script src="Router.js"></script>
-    <script>
-      const routes = {
-        "/": () => document.body.innerHTML = `
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link href="./index.css" rel="stylesheet" />
+	</head>
+	<body>
+		<nav>
+			<ul>
+				<li><a href="/" onclick="handleRoute(event)">Home</a></li>
+				<li>
+					<a href="/about" onclick="handleRoute(event)">About</a>
+				</li>
+				<li>
+					<a href="/setting" onclick="handleRoute(event)">Setting</a>
+				</li>
+			</ul>
+		</nav>
+		<div id="root"></div>
+		<script>
+      const ROOT_EL = document.getElementById("root");
+
+			class Router {
+				constructor(routes) {
+					this.routes = routes;
+					this._handleRouteChange();
+					window.addEventListener("popstate", () => this._handleRouteChange());
+				}
+
+				navigate(path) {
+					history.pushState({}, "", path);
+					this._handleRouteChange();
+				}
+
+				_handleRouteChange() {
+					const path = window.location.pathname;
+					const route = this.routes[path] || this.routes["404"];
+					if (route) {
+						route();
+					}
+				}
+			}
+
+			const routes = {
+				"/": () =>
+					(ROOT_EL.innerHTML = `
           <h1>Home Page</h1>
           <span>
             While working with <a class="special-keyword" href="https://react.dev/" target="_blank">React</a>, we usually just use the 
@@ -35,16 +58,23 @@
             hood. 
           </span>
           <span>Go ahead and click the links on the Navbar</span>
-        `,
-        "/about": () => document.body.innerHTML = `
+        `),
+				"/about": () =>
+					(ROOT_EL.innerHTML = `
           <h1>About</h1>
           <span>As you can see the even though we are using anchor tag in the code, the page does not reload and the URL also chages with the help of pushState from history API </span>
-        `,
-        "/setting": () => document.body.innerHTML = `<h1>Setting page</h1><span>Why do we need a router if we can create SPAs so easily? </span>`,
-        "404": () => document.body.innerHTML = `<h1>Not found</h1>`
-      }
+        `),
+				"/setting": () => (ROOT_EL.innerHTML = `<h1>Setting page</h1><span>Why do we need a router if we can create SPAs so easily? </span>`),
+				404: () => (ROOT_EL.innerHTML = `<h1>Not found</h1>`),
+			};
 
-      const router = new Router(routes);
-    </script>
-  </body>
+			const router = new Router(routes);
+
+			function handleRoute(event) {
+        event.preventDefault();
+        const path = new URL(event.target.href).pathname;
+				router.navigate(path);
+			}
+		</script>
+	</body>
 </html>
