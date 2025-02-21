@@ -1,3 +1,4 @@
+console.log("hit")
 const PORT = location.port;
 const HomePage = `
 <h1>Home Page</h1>
@@ -20,8 +21,7 @@ const AboutPage = ` <h1>About Page</h1>
         from history API
       </span>
     `;
-const settingPage = `<h1>Setting page</h1>
-      <span>Why do we need a router if we can create SPAs so easily? </span>`;
+const settingPage = `<h1>Setting page</h1><span>Why do we need a router if we can create SPAs so easily? </span>`;
 let root = document.getElementById("root");
 // onClickNavigate();
 window.addEventListener("DOMContentLoaded", onClickNavigate);

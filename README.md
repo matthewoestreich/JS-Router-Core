@@ -1,0 +1,3 @@
+- Run `npm install`
+- Start server `node server.js`
+- Browse to `localhost:3000` (or whatever port you changed it to, by default it is 3000)

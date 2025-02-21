@@ -9,16 +9,42 @@
   <body>
     <nav>
       <ul>
-        <li><a href="/" onclick="onClickNavigate(event)">Home</a></li>
+        <li><a href="/" onclick="router.navigate('/')">Home</a></li>
         <li>
-          <a href="/about" onclick="onClickNavigate(event)">About</a>
+          <a href="/about" onclick="router.navigate('/about')">About</a>
         </li>
         <li>
-          <a href="/setting" onclick="onClickNavigate(event)">Setting</a>
+          <a href="/setting" onclick="router.navigate('/setting')">Setting</a>
         </li>
       </ul>
     </nav>
     <div id="root"></div>
-    <script src="index.js"></script>
+    <script src="Router.js"></script>
+    <script>
+      const routes = {
+        "/": () => document.body.innerHTML = `
+          <h1>Home Page</h1>
+          <span>
+            While working with <a class="special-keyword" href="https://react.dev/" target="_blank">React</a>, we usually just use the 
+            <a class="special-keyword" href="https://reactrouter.com/en/main/components/browserrouter" target="_blank">Browser Router</a>
+            from React Router without knowing how it works internally.
+          </span>
+          <span>
+            This is just a sample project to understand the internal working of a router in
+            bigger frameworks and understand the history API that each of them uses under the
+            hood. 
+          </span>
+          <span>Go ahead and click the links on the Navbar</span>
+        `,
+        "/about": () => document.body.innerHTML = `
+          <h1>About</h1>
+          <span>As you can see the even though we are using anchor tag in the code, the page does not reload and the URL also chages with the help of pushState from history API </span>
+        `,
+        "/setting": () => document.body.innerHTML = `<h1>Setting page</h1><span>Why do we need a router if we can create SPAs so easily? </span>`,
+        "404": () => document.body.innerHTML = `<h1>Not found</h1>`
+      }
+
+      const router = new Router(routes);
+    </script>
   </body>
 </html>
